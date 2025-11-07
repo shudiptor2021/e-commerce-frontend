@@ -1,12 +1,12 @@
 "use client";
+import { fetchCategoryItem } from "@/app/dataFetch/Api";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
-import { fetchCategoryItem } from "@/app/api/Api";
 import { Range } from "react-range";
 import ProductCard from "./ProductCard";
 
 interface Product {
-  id: string ;
+  id: string;
   title: string;
   brand: string;
   rating: number;
@@ -141,13 +141,15 @@ const CategoryProducts = ({ slug }: { slug?: string }) => {
         <div className="space-y-2">
           <h4 className="font-semibold mb-2">Filter by Brand</h4>
           {brands.map((brand: any, index) => (
-            <label key={index} className="block text-[12px] md:text-sm cursor-pointer">
+            <label
+              key={index}
+              className="block text-[12px] md:text-sm cursor-pointer"
+            >
               <input
                 type="checkbox"
                 className="mr-2"
                 checked={selectedBrands.includes(brand)}
                 onChange={() => handleBrandChange(brand)}
-                
               />
               {brand}
             </label>
@@ -157,7 +159,10 @@ const CategoryProducts = ({ slug }: { slug?: string }) => {
         <div className="space-y-2">
           <h4 className="font-semibold mb-2">Filter by Rating</h4>
           {ratings.map((rating: any) => (
-            <label key={rating} className="block text-[12px] md:text-sm cursor-pointer">
+            <label
+              key={rating}
+              className="block text-[12px] md:text-sm cursor-pointer"
+            >
               <input
                 type="checkbox"
                 className="mr-2"

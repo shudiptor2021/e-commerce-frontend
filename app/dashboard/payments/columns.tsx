@@ -16,23 +16,28 @@ import { MoreHorizontal } from "lucide-react";
 // You can use a Zod schema here if you want.
 export type Payment = {
   id: string;
-  amount: number;
-  status: "pending" | "processing" | "success" | "failed";
+  name: string;
+  role: string;
   email: string;
+  phone: string;
 };
 
 export const columns: ColumnDef<Payment>[] = [
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "name",
+    header: "Name",
   },
   {
     accessorKey: "email",
     header: "Email",
   },
   {
-    accessorKey: "amount",
-    header: "Amount",
+    accessorKey: "phone",
+    header: "Phone",
+  },
+  {
+    accessorKey: "role",
+    header: "Role",
   },
 
   // action dropdown

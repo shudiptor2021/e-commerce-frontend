@@ -5,7 +5,7 @@ const formSchema = z.object({
   name: z.string().min(3).max(12),
   email: z.string().email(),
   phone: z.string().min(11).max(11),
-  message: z.string().min(10).max(50),
+  message: z.string().min(10).max(200),
 });
 
 export const createContact = async (prevState: any, formData: FormData) => {

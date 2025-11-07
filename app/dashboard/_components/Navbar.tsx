@@ -16,15 +16,26 @@ import { CgProfile } from "react-icons/cg";
 import { IoIosLogOut } from "react-icons/io";
 import { IoSettingsOutline } from "react-icons/io5";
 
-const Navbar = () => {
+interface NavbarProps {
+  userData: User | null;
+}
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+}
+const Navbar = ({ userData }: NavbarProps) => {
   const { setTheme } = useTheme();
+  // console.log(userData);
   return (
     <nav className="p-4 flex items-center justify-between sticky top-0 bg-background z-10">
       {/* left */}
       <SidebarTrigger />
       {/* right */}
       <div className="flex items-center gap-4">
-        <h1>Dashboard</h1>
+        <h1>{userData?.name}</h1>
 
         {/* theme section */}
         <DropdownMenu>

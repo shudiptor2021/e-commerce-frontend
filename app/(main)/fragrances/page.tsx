@@ -1,7 +1,7 @@
 "use client";
 
 import ProductCard from "@/app/_components/ProductCard";
-import { fetchCategoryItem } from "@/app/api/Api";
+import { fetchCategoryItem } from "@/app/dataFetch/Api";
 import { useQuery } from "@tanstack/react-query";
 
 import { useEffect, useMemo, useState } from "react";
@@ -26,73 +26,73 @@ const fragrancePage = () => {
   });
   // console.log(data);
 
-    const [minPrice, setMinPrice] = useState(0);
-    const [maxPrice, setMaxPrice] = useState(10000);
-    const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
-  
-    const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
-    const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
-  
-    // price range
-    useEffect(() => {
-      if (data?.products?.length) {
-        const prices = data.products.map((p: Product) => p.price);
-        const min = Math.min(...prices);
-        const max = Math.max(...prices);
-        setMinPrice(min);
-        setMaxPrice(max);
-        setPriceRange([min, max]);
-      }
-    }, [data]);
-  
-    // Extract unique brands and ratings
-    const brands = useMemo(() => {
-      return data?.products
-        ? [...new Set(data.products.map((p: Product) => p.brand))]
-        : [];
-    }, [data]);
-  
-    const ratings = useMemo(() => {
-      return data?.products
-        ? [
-            ...new Set(data.products.map((p: Product) => Math.floor(p.rating))),
-          ].sort((a, b) => (b as number) - (a as number))
-        : [];
-    }, [data]);
-  
-    // Filtered products
-    const filteredProducts = useMemo(() => {
-      if (!data?.products) return [];
-  
-      return data.products.filter((product: Product) => {
-        const matchBrand =
-          selectedBrands.length === 0 || selectedBrands.includes(product.brand);
-        const matchRating =
-          selectedRatings.length === 0 ||
-          selectedRatings.includes(Math.floor(product.rating));
-        const matchPrice =
-          product.price >= priceRange[0] && product.price <= priceRange[1];
-  
-        return matchBrand && matchRating && matchPrice;
-      });
-    }, [data, selectedBrands, selectedRatings, priceRange]);
-  
-    const handleBrandChange = (brand: string) => {
-      setSelectedBrands((prev) =>
-        prev.includes(brand) ? prev.filter((b) => b !== brand) : [...prev, brand]
-      );
-    };
-  
-    const handleRatingChange = (rating: number) => {
-      setSelectedRatings((prev) =>
-        prev.includes(rating)
-          ? prev.filter((r) => r !== rating)
-          : [...prev, rating]
-      );
-    };
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(10000);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
+
+  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+  const [selectedRatings, setSelectedRatings] = useState<number[]>([]);
+
+  // price range
+  useEffect(() => {
+    if (data?.products?.length) {
+      const prices = data.products.map((p: Product) => p.price);
+      const min = Math.min(...prices);
+      const max = Math.max(...prices);
+      setMinPrice(min);
+      setMaxPrice(max);
+      setPriceRange([min, max]);
+    }
+  }, [data]);
+
+  // Extract unique brands and ratings
+  const brands = useMemo(() => {
+    return data?.products
+      ? [...new Set(data.products.map((p: Product) => p.brand))]
+      : [];
+  }, [data]);
+
+  const ratings = useMemo(() => {
+    return data?.products
+      ? [
+          ...new Set(data.products.map((p: Product) => Math.floor(p.rating))),
+        ].sort((a, b) => (b as number) - (a as number))
+      : [];
+  }, [data]);
+
+  // Filtered products
+  const filteredProducts = useMemo(() => {
+    if (!data?.products) return [];
+
+    return data.products.filter((product: Product) => {
+      const matchBrand =
+        selectedBrands.length === 0 || selectedBrands.includes(product.brand);
+      const matchRating =
+        selectedRatings.length === 0 ||
+        selectedRatings.includes(Math.floor(product.rating));
+      const matchPrice =
+        product.price >= priceRange[0] && product.price <= priceRange[1];
+
+      return matchBrand && matchRating && matchPrice;
+    });
+  }, [data, selectedBrands, selectedRatings, priceRange]);
+
+  const handleBrandChange = (brand: string) => {
+    setSelectedBrands((prev) =>
+      prev.includes(brand) ? prev.filter((b) => b !== brand) : [...prev, brand]
+    );
+  };
+
+  const handleRatingChange = (rating: number) => {
+    setSelectedRatings((prev) =>
+      prev.includes(rating)
+        ? prev.filter((r) => r !== rating)
+        : [...prev, rating]
+    );
+  };
   return (
     <section className=" container mx-auto px-2 md:px-14 bg-white md:flex justify-between md:pt-10 md:pb-20">
-       {/* filtering */}
+      {/* filtering */}
       <div className=" md:w-[280px] space-y-4 md:space-y-8">
         {/* ------------ */}
         <div>
@@ -143,13 +143,15 @@ const fragrancePage = () => {
         <div className="space-y-2">
           <h4 className="font-semibold mb-2">Filter by Brand</h4>
           {brands.map((brand: any, index) => (
-            <label key={index} className="block text-[12px] md:text-sm cursor-pointer">
+            <label
+              key={index}
+              className="block text-[12px] md:text-sm cursor-pointer"
+            >
               <input
                 type="checkbox"
                 className="mr-2"
                 checked={selectedBrands.includes(brand)}
                 onChange={() => handleBrandChange(brand)}
-                
               />
               {brand}
             </label>
@@ -159,7 +161,10 @@ const fragrancePage = () => {
         <div className="space-y-2">
           <h4 className="font-semibold mb-2">Filter by Rating</h4>
           {ratings.map((rating: any) => (
-            <label key={rating} className="block text-[12px] md:text-sm cursor-pointer">
+            <label
+              key={rating}
+              className="block text-[12px] md:text-sm cursor-pointer"
+            >
               <input
                 type="checkbox"
                 className="mr-2"

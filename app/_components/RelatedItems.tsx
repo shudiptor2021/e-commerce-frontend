@@ -1,12 +1,11 @@
 "use client";
+import { useQuery } from "@tanstack/react-query";
+import { GoArrowLeft, GoArrowRight } from "react-icons/go";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { GoArrowLeft } from "react-icons/go";
-import { GoArrowRight } from "react-icons/go";
+import { fetchCategoryItem } from "../dataFetch/Api";
 import HeroHeadLine from "./HeroHeadLine";
 import ProductCard from "./ProductCard";
-import { useQuery } from "@tanstack/react-query";
-import { fetchCategoryItem } from "../api/Api";
 
 interface Props {
   category: string;
@@ -46,7 +45,7 @@ const RelatedItems = ({ category }: Props) => {
   };
 
   if (isPending) return <div>Loading...</div>;
-if (isError) return <div>Error: {error.message}</div>;
+  if (isError) return <div>Error: {error.message}</div>;
   return (
     <section className="w-full h-[450px] md:h-[750px] flex flex-col items-center justify-center gap-10 md:gap-20 ">
       <div className=" relative w-full md:h-[495px] flex flex-col justify-between">

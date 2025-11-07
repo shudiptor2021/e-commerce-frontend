@@ -1,7 +1,6 @@
 import RelatedItems from "@/app/_components/RelatedItems";
 import SingleProduct from "@/app/_components/SingleProduct";
-import { fetchProduct } from "@/app/api/Api";
-
+import { fetchProduct } from "@/app/dataFetch/Api";
 
 export const revalidate = 0;
 // revalidate: 0 means no caching, always fetch fresh data

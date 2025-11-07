@@ -1,12 +1,12 @@
 "use client";
 import { useToggleMenu } from "@/context/NavbarToggleContext";
-import { FiSearch } from "react-icons/fi";
-import { FaTimes } from "react-icons/fa";
-import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { fetchSearchProducts } from "../api/Api";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import { FaTimes } from "react-icons/fa";
+import { FiSearch } from "react-icons/fi";
+import { fetchSearchProducts } from "../dataFetch/Api";
 
 const SearchModal = () => {
   const { searchItem, setSearchItem } = useToggleMenu();

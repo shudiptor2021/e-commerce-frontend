@@ -1,11 +1,10 @@
 "use client";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
-import { useEffect, useState } from "react";
-import { fetchAllProducts } from "../api/Api";
-import ProductCard from "./ProductCard";
-import { PaginationPage } from "./PaginationPage";
+import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
+import { fetchAllProducts } from "../dataFetch/Api";
+import ProductCard from "./ProductCard";
 
 type Products = {
   id: string | number;
@@ -15,7 +14,7 @@ type Products = {
 const ShopProductPage = () => {
   // const [pageNumber, setPageNumber] = useState(1);
   // const limit = 12;
- const { ref, inView } = useInView()
+  const { ref, inView } = useInView();
   const {
     data,
     error,
@@ -28,15 +27,15 @@ const ShopProductPage = () => {
     queryKey: ["products"],
     queryFn: fetchAllProducts,
     initialPageParam: 0,
-    getNextPageParam: (lastPage) => lastPage.nextCursor,  
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
   });
   // console.log(data);
- 
-useEffect(() => {
-  if (inView && hasNextPage && !isFetchingNextPage) {
-    fetchNextPage();
-  }
-}, [inView, fetchNextPage, hasNextPage, isFetchingNextPage]);
+
+  useEffect(() => {
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   return (
     <section className="container mx-auto px-2 md:px-14 space-x-3 bg-white md:flex justify-between pb-8 md:py-8 md:pb-20">
@@ -55,10 +54,8 @@ useEffect(() => {
               </div>
             )
         )}
-       <div ref={ref} className="h-0.5"></div>
-
+        <div ref={ref} className="h-0.5"></div>
       </div>
-
     </section>
   );
 };

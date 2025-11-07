@@ -1,12 +1,11 @@
 "use client";
-import { FaBarsStaggered } from "react-icons/fa6";
-import { FaTimes } from "react-icons/fa";
-import { useEffect, useState } from "react";
-import Link from "next/link";
 import { useToggleMenu } from "@/context/NavbarToggleContext";
-import SearchMain from "./SearchMain";
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
+import { FaTimes } from "react-icons/fa";
+import { FaBarsStaggered } from "react-icons/fa6";
+import SearchMain from "./SearchMain";
 import SearchRaise from "./SearchRaise";
 
 const MobileNavbar = ({
@@ -96,7 +95,7 @@ const MobileNavbar = ({
         </ul>
         {/* authentication */}
         <div className="flex flex-col gap-2 pt-2 justify-start items-start px-5 ">
-          <SignedOut>
+          {/* <SignedOut>
             <button
               className={`${
                 pathName === "/login"
@@ -118,7 +117,7 @@ const MobileNavbar = ({
           </SignedOut>
           <SignedIn>
             <UserButton />
-          </SignedIn>
+          </SignedIn> */}
         </div>
       </div>
     </section>

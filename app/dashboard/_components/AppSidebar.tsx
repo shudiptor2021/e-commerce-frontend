@@ -44,7 +44,7 @@ import { CgProfile } from "react-icons/cg";
 const items = [
   {
     title: "Home",
-    url: "#",
+    url: "/dashboard",
     icon: Home,
   },
   {
@@ -107,7 +107,7 @@ const AppSidebar = () => {
         </SidebarGroup>
         {/* action items */}
         <SidebarGroup>
-          <SidebarGroupLabel>Projects</SidebarGroupLabel>
+          <SidebarGroupLabel>Users</SidebarGroupLabel>
           <SidebarGroupAction>
             <Plus /> <span className="sr-only">Add Project</span>
           </SidebarGroupAction>
@@ -115,15 +115,8 @@ const AppSidebar = () => {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <Link href="/# ">
-                    <Projector /> See All Projects
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-              <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <Link href="/# ">
-                    <Plus /> Add Projects
+                  <Link href="/dashboard/users ">
+                    <Projector /> See All Users
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -135,7 +128,7 @@ const AppSidebar = () => {
           <SidebarGroup>
             <SidebarGroupLabel asChild>
               <CollapsibleTrigger className="flex items-center justify-between">
-                Collapsible Group
+                Products
                 <ChevronDown className="transition-transform group-data-[state=open]/collapsible:rotate-180" />
               </CollapsibleTrigger>
             </SidebarGroupLabel>
@@ -144,15 +137,15 @@ const AppSidebar = () => {
                 <SidebarMenu>
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild>
-                      <Link href="/# ">
-                        <Projector /> See All Projects
+                      <Link href="/products">
+                        <Projector /> See All Products
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                   <SidebarMenuItem>
                     <SidebarMenuButton asChild>
                       <Link href="/# ">
-                        <Plus /> Add Projects
+                        <Plus /> Add Products
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>

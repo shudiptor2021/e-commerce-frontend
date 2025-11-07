@@ -1,12 +1,12 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { redirect, usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-import { FiSearch } from "react-icons/fi";
-import { fetchSearchProducts } from "../api/Api";
 import Link from "next/link";
+import { redirect, usePathname } from "next/navigation";
+import { useRef, useState } from "react";
+import { FiSearch } from "react-icons/fi";
 import { LiaTimesSolid } from "react-icons/lia";
+import { fetchSearchProducts } from "../dataFetch/Api";
 
 const SearchRaise = () => {
   const [searchBar, setSearchBar] = useState(false);
