@@ -15,7 +15,7 @@ import { MoreHorizontal } from "lucide-react";
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type Users = {
-  id: string;
+  _id: string;
   name: string;
   role: string;
   email: string;
@@ -31,10 +31,12 @@ export const columns: ColumnDef<Users>[] = [
   {
     accessorKey: "email",
     header: "Email",
+    cell: ({ row }) => <div className="">{row.getValue("email") || "---"}</div>,
   },
   {
     accessorKey: "phone",
     header: "Phone",
+    cell: ({ row }) => <div className="">{row.getValue("phone") || "---"}</div>,
   },
   {
     accessorKey: "role",
@@ -55,16 +57,25 @@ export const columns: ColumnDef<Users>[] = [
               <MoreHorizontal className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
+
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(user.id)}
+              onClick={() => navigator.clipboard.writeText(user.email)}
             >
-              Copy payment ID
+              Copy Email
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() =>
+                (window.location.href = `/dashboard/users/${row.getValue(
+                  "_id"
+                )}`)
+              }
+            >
+              Change Role
+            </DropdownMenuItem>
+            <DropdownMenuItem>Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

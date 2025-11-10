@@ -53,6 +53,15 @@ const ProductUpdateForm = ({ product }: ProductProp) => {
             <FieldGroup>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-4 capitalize">
                 <Field className=" col-span-3 md:col-span-2">
+                  <Input
+                    name="_id"
+                    id="_id"
+                    autoComplete="off"
+                    defaultValue={product?._id}
+                    hidden
+                  />
+                </Field>
+                <Field className=" col-span-3 md:col-span-2">
                   <FieldLabel htmlFor="title" className="text-[16px]">
                     Title
                   </FieldLabel>
@@ -62,11 +71,11 @@ const ProductUpdateForm = ({ product }: ProductProp) => {
                     autoComplete="off"
                     defaultValue={product?.title}
                   />
-                  {/* {state?.errors?.title && (
+                  {state?.errors?.title && (
                     <p className="text-red-500 text-sm mt-1">
                       {state?.errors?.title?.[0]}
                     </p>
-                  )} */}
+                  )}
                 </Field>
                 <Field className="col-span-3 md:col-span-1">
                   <FieldLabel htmlFor="category" className="text-[16px]">
@@ -78,11 +87,11 @@ const ProductUpdateForm = ({ product }: ProductProp) => {
                     autoComplete="off"
                     defaultValue={product?.category}
                   />
-                  {/* {state?.errors?.category && (
+                  {state?.errors?.category && (
                     <p className="text-red-500 text-sm mt-1">
                       {state?.errors?.category?.[0]}
                     </p>
-                  )} */}
+                  )}
                 </Field>
                 <Field className="col-span-3">
                   <FieldLabel htmlFor="description" className="text-[16px]">
@@ -94,11 +103,11 @@ const ProductUpdateForm = ({ product }: ProductProp) => {
                     defaultValue={product?.description}
                     rows={4}
                   />
-                  {/* {state?.errors?.description && (
+                  {state?.errors?.description && (
                     <p className="text-red-500 text-sm mt-1">
                       {state?.errors?.description?.[0]}
                     </p>
-                  )} */}
+                  )}
                 </Field>
                 <Field className="col-span-3 md:col-span-1">
                   <FieldLabel htmlFor="price" className="text-[16px]">
@@ -110,11 +119,11 @@ const ProductUpdateForm = ({ product }: ProductProp) => {
                     autoComplete="off"
                     defaultValue={product?.price}
                   />
-                  {/* {state?.errors?.price && (
+                  {state?.errors?.price && (
                     <p className="text-red-500 text-sm mt-1">
                       {state?.errors?.price?.[0]}
                     </p>
-                  )} */}
+                  )}
                 </Field>
                 <Field className="col-span-3 md:col-span-1">
                   <FieldLabel htmlFor="stock" className="text-[16px]">
@@ -270,30 +279,35 @@ const ProductUpdateForm = ({ product }: ProductProp) => {
                   <FieldLabel htmlFor="thumbnail" className="text-[16px]">
                     Thumbnail
                   </FieldLabel>
-                  <Input name="thumbnail" id="thumbnail" type="file" />
-                  {/* {state?.errors?.thumbnail && (
+                  <Input
+                    name="thumbnail"
+                    id="thumbnail"
+                    type="file"
+                    // defaultValue={product?.thumbnail}
+                  />
+                  {state?.errors?.thumbnail && (
                     <p className="text-red-500 text-sm mt-1">
                       {state?.errors?.thumbnail?.[0]}
                     </p>
-                  )} */}
+                  )}
                 </Field>
                 <Field className="col-span-3 md:col-span-1">
                   <FieldLabel htmlFor="images" className="text-[16px]">
                     Images
                   </FieldLabel>
                   <Input name="images" id="images" type="file" multiple />
-                  {/* {state?.errors?.images && (
+                  {state?.errors?.images && (
                     <p className="text-red-500 text-sm mt-1">
                       {state?.errors?.images?.[0]}
                     </p>
-                  )} */}
+                  )}
                 </Field>
               </div>
             </FieldGroup>
           </FieldSet>
           <div className="pt-3 md:pt-5">
             <Button type="submit" disabled={ispending} variant="outline">
-              Create
+              Update Product
             </Button>
           </div>
         </form>

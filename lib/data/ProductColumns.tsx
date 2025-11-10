@@ -1,5 +1,6 @@
 "use client";
 
+import { deleteProduct } from "@/app/actions/product/product";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -88,6 +89,12 @@ export const columns: ColumnDef<Products>[] = [
     cell: ({ row }) => {
       const product = row.original;
 
+      // handle delete product
+      const handleDelete = async () => {
+        const id = row.getValue("_id") as string;
+        const deleteItem = await deleteProduct(id);
+      };
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -118,7 +125,10 @@ export const columns: ColumnDef<Products>[] = [
             >
               Update Product
             </DropdownMenuItem>
-            <DropdownMenuItem className="text-red-500 font-semibold">
+            <DropdownMenuItem
+              onClick={handleDelete}
+              className="text-red-500 font-semibold"
+            >
               Delete Product
             </DropdownMenuItem>
           </DropdownMenuContent>

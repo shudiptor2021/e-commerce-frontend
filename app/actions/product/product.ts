@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import z from "zod";
 
 // Validate a single file (e.g. thumbnail)
@@ -18,6 +20,7 @@ const imagesSchema = z
   .optional(); // make optional if not always required
 
 const formSchema = z.object({
+  // id: z.string().optional(),
   title: z.string().min(1, "Title is required"),
   category: z.string().min(1, "Category is required"),
   description: z.string().min(1, "Description is required"),
@@ -38,6 +41,7 @@ const formSchema = z.object({
   images: imagesSchema.optional(),
 });
 
+// create product action
 export const addProduct = async (prevState: any, formData: FormData) => {
   const parseNumber = (value: FormDataEntryValue | null) => {
     if (!value) return undefined;
@@ -138,6 +142,7 @@ export const addProduct = async (prevState: any, formData: FormData) => {
   }
 };
 
+// update product action
 export const updateProduct = async (prevState: any, formData: FormData) => {
   const parseNumber = (value: FormDataEntryValue | null) => {
     if (!value) return undefined;
@@ -145,6 +150,8 @@ export const updateProduct = async (prevState: any, formData: FormData) => {
     return isNaN(num) ? undefined : num;
   };
   //  validation
+  const id = formData.get("_id") as string;
+
   const parsed = formSchema.safeParse({
     title: formData.get("title") as string,
     category: formData.get("category") as string,
@@ -172,6 +179,9 @@ export const updateProduct = async (prevState: any, formData: FormData) => {
   const payload = new FormData();
 
   // Append validated fields (see previous snippet for full appending)
+  // if (validatedFields.id !== undefined) {
+  //   payload.append("_id", validatedFields.id);
+  // }
   payload.append("title", validatedFields.title);
   payload.append("category", validatedFields.category);
   payload.append("description", validatedFields.description);
@@ -215,25 +225,40 @@ export const updateProduct = async (prevState: any, formData: FormData) => {
     validatedFields.images.forEach((img) => payload.append("images", img));
   }
 
-  try {
-    const res = await fetch(
-      `https://api-dokan-backend.onrender.com/api/v1/products`,
-      {
-        method: "POST",
-        body: payload,
-        // headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      }
-    );
-
-    const product = await res.json();
-    if (!res.ok) {
-      console.error("API Error:", product);
-      return { error: product.message || "Failed to add product" };
+  const res = await fetch(
+    `https://api-dokan-backend.onrender.com/api/v1/products/${id}`,
+    {
+      method: "PUT",
+      body: payload,
+      credentials: "include",
     }
-    // console.log(product);
-  } catch (error) {
-    console.error("Error in product adding:", error);
-    return { error: "add product failed" };
+  );
+  const product = await res.json();
+  if (!res.ok) {
+    console.error("API Error:", product);
+    return { error: product.message || "Failed to add product" };
   }
+
+  // back to all product page
+  revalidatePath("/dashboard/products");
+  redirect("/dashboard/products");
+  // console.log(product);
+};
+
+// delete product action
+export const deleteProduct = async (id: string) => {
+  const res = await fetch(
+    `https://api-dokan-backend.onrender.com/api/v1/products/${id}`,
+    {
+      method: "DELETE",
+      credentials: "include",
+    }
+  );
+  const product = await res.json();
+  if (!res.ok) {
+    // console.error("API Error:", product);
+    return { error: product.message || "Failed to add product" };
+  }
+
+  revalidatePath("/dashboard/products");
 };
