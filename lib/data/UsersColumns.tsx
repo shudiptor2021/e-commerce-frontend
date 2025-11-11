@@ -1,5 +1,6 @@
 "use client";
 
+import { changeRole } from "@/app/actions/user/changeRole";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,8 +10,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
+import { useActionState, useState } from "react";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -23,6 +33,11 @@ export type Users = {
 };
 
 export const columns: ColumnDef<Users>[] = [
+  {
+    accessorKey: "_id",
+    header: "",
+    cell: ({ row }) => <div className="hidden">{row.getValue("_id")}</div>,
+  },
   {
     accessorKey: "name",
     header: "Name",
@@ -48,6 +63,9 @@ export const columns: ColumnDef<Users>[] = [
     id: "actions",
     cell: ({ row }) => {
       const user = row.original;
+      const [state, action, ispending] = useActionState(changeRole, null);
+      const [role, setRole] = useState(user.role);
+      const id = row.getValue("_id") as string;
 
       return (
         <DropdownMenu>
@@ -67,13 +85,28 @@ export const columns: ColumnDef<Users>[] = [
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              onClick={() =>
-                (window.location.href = `/dashboard/users/${row.getValue(
-                  "_id"
-                )}`)
-              }
+            // onClick={() =>
+            //   (window.location.href = `/dashboard/users/${row.getValue(
+            //     "_id"
+            //   )}`)
+            // }
             >
-              Change Role
+              <form action={action}>
+                <input type="text" name="_id" defaultValue={id} hidden />
+                <Select onValueChange={setRole} value={role}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Chage Role" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="admin">Admin</SelectItem>
+                      <SelectItem value="user">User</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                <input type="hidden" name="role" value={role} />
+                <Button type="submit">Save</Button>
+              </form>
             </DropdownMenuItem>
             <DropdownMenuItem>Delete</DropdownMenuItem>
           </DropdownMenuContent>
