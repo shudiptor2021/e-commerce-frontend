@@ -70,3 +70,6 @@ export const fetchBestSale = async () => {
   const res = await api.get(`/products/?limit=4&skip=10`);
   return res?.data?.products;
 };
+
+
+

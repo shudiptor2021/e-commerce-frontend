@@ -84,18 +84,12 @@ export const columns: ColumnDef<Users>[] = [
               Copy Email
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-            // onClick={() =>
-            //   (window.location.href = `/dashboard/users/${row.getValue(
-            //     "_id"
-            //   )}`)
-            // }
-            >
+            <DropdownMenuItem>
               <form action={action}>
                 <input type="text" name="_id" defaultValue={id} hidden />
                 <Select onValueChange={setRole} value={role}>
                   <SelectTrigger className="w-[180px]">
-                    <SelectValue placeholder="Chage Role" />
+                    <SelectValue placeholder="Change Role" />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
@@ -105,10 +99,14 @@ export const columns: ColumnDef<Users>[] = [
                   </SelectContent>
                 </Select>
                 <input type="hidden" name="role" value={role} />
-                <Button type="submit">Save</Button>
+                <Button type="submit" className="mt-2">
+                  Save
+                </Button>
               </form>
             </DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
+            <DropdownMenuItem className="text-red-500 hover:text-red-700">
+              Delete
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

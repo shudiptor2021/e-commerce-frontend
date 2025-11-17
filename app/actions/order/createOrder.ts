@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 import z from "zod";
 
 const formSchema = z.object({
@@ -27,13 +29,69 @@ export const createOrder = async (prevState: any, formData: FormData) => {
     products: formData.getAll("products") as string[],
     coupon: formData.get("coupon") as string,
   });
-  
+
   // Return early if the form data is invalid
   if (!validatedFields.success) {
     console.log("error", validatedFields.error.flatten().fieldErrors);
     return {
       errors: validatedFields.error.flatten().fieldErrors,
     };
-  }  return ( console.log(validatedFields) ,{ success: true } );
- 
+  }
+  return console.log(validatedFields), { success: true };
+};
+
+// update order status
+export const changeOrderStatus = async (prevState: any, formData: FormData) => {
+  const id = formData.get("_id") as string;
+  const status = formData.get("status") as string;
+  // const admin = await fetchUserProfile();
+  // const adminId = admin._id;
+  const cookieStore = await cookies();
+  const adminToken = cookieStore.get("token")?.value;
+  // const adminId = cookieStore.get("userId")?.value;
+
+  // console.log(role, id);
+  // console.log(adminToken);
+
+  const res = await fetch(
+    `https://api-dokan-backend.onrender.com/api/v1/orders/${id}`,
+    {
+      method: "PUT",
+      body: JSON.stringify({ id, status }),
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${adminToken}`,
+      },
+    }
+  );
+
+  const order = await res.json();
+  revalidatePath("/dashboard/orders");
+  // console.log(order);
+  return order;
+};
+
+// delete order action
+export const deleteOrder = async (id: string) => {
+  const cookieStore = await cookies();
+  const adminToken = cookieStore.get("token")?.value;
+  const res = await fetch(
+    `https://api-dokan-backend.onrender.com/api/v1/orders/${id}`,
+    {
+      method: "DELETE",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${adminToken}`,
+      },
+    }
+  );
+  const orderItem = await res.json();
+  if (!res.ok) {
+    console.error("API Error:", orderItem);
+    return { error: orderItem.message || "Failed to add orderItem" };
+  }
+
+  revalidatePath("/dashboard/orders");
 };

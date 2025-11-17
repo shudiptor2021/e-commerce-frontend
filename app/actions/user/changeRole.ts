@@ -12,7 +12,7 @@ export const changeRole = async (prevState: any, formData: FormData) => {
   const adminToken = cookieStore.get("token")?.value;
   const adminId = cookieStore.get("userId")?.value;
 
-  console.log(role, id);
+  // console.log(role, id);
   // console.log(adminToken);
 
   const res = await fetch(
