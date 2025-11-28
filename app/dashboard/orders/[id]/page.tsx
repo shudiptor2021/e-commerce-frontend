@@ -63,7 +63,9 @@ const orederDetails = async (props: Props) => {
         <p className="text-[18px] font-semibold flex items-end gap-3">
           Product Details:{" "}
           <span className="text-[16px] font-stretch-50% capitalize text-muted-foreground">
-            {order?.ordered_product}
+            {order?.ordered_product
+              .map((product: string) => product)
+              .join(" | ")}
           </span>
         </p>
         <span className="w-full h-[2px] bg-muted-foreground rounded"></span>

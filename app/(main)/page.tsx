@@ -14,7 +14,6 @@ export default function Home() {
     <section>
       <div className="container mx-auto px-2 md:px-14 bg-white">
         <HeroBanner />
-
         <HeroFlashsale />
         <HeroCategoryBoxs />
         <HeroSelling />

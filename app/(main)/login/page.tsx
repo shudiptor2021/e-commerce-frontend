@@ -104,7 +104,7 @@ const LogInPage = () => {
                 Didn't have account?
               </p>
               <Link
-                href="login"
+                href="signup"
                 className="text-sm md:text-[16px] text-gray-700 underline underline-gray-400 underline-offset-6"
               >
                 Sign in

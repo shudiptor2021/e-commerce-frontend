@@ -35,7 +35,7 @@ export type Orders = {
   city_town: string;
   phone: string;
   email: string;
-  ordered_product: string;
+  ordered_product: string[];
   status: string;
   created_at: string;
 };
@@ -79,14 +79,13 @@ export const columns: ColumnDef<Orders>[] = [
   {
     accessorKey: "ordered_product",
     header: "Ordered Product",
-    cell: ({ row }) => (
-      <div className="capitalize">
-        {(row.getValue("ordered_product") as string)
-          .split(" ")
-          .slice(0, 3)
-          .join(" ")}
-      </div>
-    ),
+    cell: ({ row }) => {
+      const products = row.getValue("ordered_product") as string[];
+
+      return (
+        <div className="capitalize">{products.slice(0, 3).join(", ")}</div>
+      );
+    },
   },
   {
     accessorKey: "status",

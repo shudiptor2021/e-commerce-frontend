@@ -5,29 +5,32 @@ import { cookies } from "next/headers";
 import z from "zod";
 
 const formSchema = z.object({
-  name: z.string().min(3).max(15),
-  companyName: z.string() || z.null,
-  address: z.string().min(5),
-  apertment: z.string() || z.null,
-  city: z.string().min(5),
+  name: z.string().min(3).max(10),
+  company_name: z.string().nullable().optional(),
+  address: z.string().min(5).max(20),
+  address_details: z.string().nullable().optional(),
+  city_town: z.string().min(5).max(20),
   phone: z.string().min(11).max(11),
   email: z.string().email(),
-  products: z.array(z.string()),
-  coupon: z.string() || z.null,
+  ordered_product: z.array(z.string()),
+  coupon: z.string().nullable().optional(),
+  status: z.string(),
 });
 
+// create Order
 export const createOrder = async (prevState: any, formData: FormData) => {
   // validation
   const validatedFields = formSchema.safeParse({
     name: formData.get("name") as string,
-    companyName: formData.get("companyName") as string,
+    company_name: formData.get("company_name") as string,
     address: formData.get("address") as string,
-    apertment: formData.get("apertment") as string,
-    city: formData.get("city") as string,
+    address_details: formData.get("address_details") as string,
+    city_town: formData.get("city_town") as string,
     phone: formData.get("phone") as string,
     email: formData.get("email") as string,
-    products: formData.getAll("products") as string[],
+    ordered_product: formData.getAll("ordered_product") as string[],
     coupon: formData.get("coupon") as string,
+    status: formData.get("status") as string,
   });
 
   // Return early if the form data is invalid
@@ -37,7 +40,26 @@ export const createOrder = async (prevState: any, formData: FormData) => {
       errors: validatedFields.error.flatten().fieldErrors,
     };
   }
-  return console.log(validatedFields), { success: true };
+
+  const orderData = validatedFields.data;
+
+  const res = await fetch(
+    `https://api-dokan-backend.onrender.com/api/v1/orders`,
+    {
+      method: "POST",
+      body: JSON.stringify(orderData),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    }
+  );
+
+  const order = await res.json();
+  if (!res.ok) {
+    console.error("API Error:", order);
+    return { error: order.message || "Failed to add order" };
+  }
+  console.log(order);
+  return { success: true };
 };
 
 // update order status

@@ -3,9 +3,9 @@ import { z } from "zod";
 
 const formSchema = z.object({
   name: z.string().min(3).max(12),
-  email: z.string().email(),
-  phone: z.string().min(11).max(11),
-  message: z.string().min(10).max(200),
+  email: z.string().optional().nullable(),
+  phone: z.string().min(10).max(12),
+  message: z.string().min(10).max(50),
 });
 
 export const createContact = async (prevState: any, formData: FormData) => {
@@ -24,5 +24,25 @@ export const createContact = async (prevState: any, formData: FormData) => {
       errors: validationFields.error.flatten().fieldErrors,
     };
   }
-  console.log(validationFields);
+
+  const userContact = validationFields.data;
+
+  const res = await fetch(
+    `https://api-dokan-backend.onrender.com/api/v1/contact`,
+    {
+      method: "POST",
+      body: JSON.stringify(userContact),
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+    }
+  );
+
+  const contact = await res.json();
+  if (!res.ok) {
+    console.error("API Error:", contact);
+    return { error: contact.message || "Failed to add contact" };
+  }
+
+  return { success: true };
+  // console.log(userContact);
 };
