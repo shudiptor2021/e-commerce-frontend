@@ -18,7 +18,7 @@ const SingleProductImage = ({ product }: Item) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   // console.log(product?.images)
   return (
-    <div className="w-full md:w-[700px] md:h-[600px] flex flex-col-reverse md:flex-row gap-4 md:gap-8">
+    <div className="w-full md:w-[700px] md:h-[350px] flex flex-col-reverse md:flex-row gap-4 md:gap-8">
       {/* vertical thumbnail */}
       <div className="flex flex-row md:flex-col gap-4">
         {product?.images?.map((image: Image, index: number) => (
@@ -41,7 +41,7 @@ const SingleProductImage = ({ product }: Item) => {
       </div>
 
       {/* main carousel */}
-      <div className="w-full h-[300px] md:w-[500px] md:h-[600px] overflow-hidden">
+      <div className="w-full h-[300px] md:w-[500px] md:h-[350px] overflow-hidden">
         <Carousel
           selectedItem={selectedIndex}
           onChange={setSelectedIndex}

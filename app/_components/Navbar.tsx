@@ -1,5 +1,4 @@
 "use client";
-
 import DesktopNavbar from "./DesktopNavbar";
 import MobileNavbar from "./MobileNavbar";
 import ModalMenu from "./ModalMenu";
