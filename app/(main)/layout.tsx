@@ -16,6 +16,7 @@ export default async function MainLayout({
   // const token = cookieStore.get("token")?.value;
   // console.log(userData?.role);
   // console.log(token);
+  // console.log(userData);
   return (
     <div>
       <Navbar userData={userData} />

@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect } from "react";
 import { FcGoogle } from "react-icons/fc";
+import { toast } from "sonner";
 
 const LogInPage = () => {
   const [state, action, ispending] = useActionState(doLogin, null);
@@ -13,6 +14,7 @@ const LogInPage = () => {
   useEffect(() => {
     if (state?.success) {
       router.push("/");
+      toast.success("Logged in succesfully!")
     }
   }, [state, router]);
 

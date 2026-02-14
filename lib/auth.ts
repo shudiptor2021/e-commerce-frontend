@@ -12,7 +12,7 @@ export async function fetchUserProfile() {
   }
 
   const res = await fetch(
-    `https://api-dokan-backend.onrender.com/api/v1/users/profile/${userId}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/users/profile/${userId}`,
     // {
     //   credentials: "include",
     // }
@@ -21,10 +21,15 @@ export async function fetchUserProfile() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
+      // cache: "no-store",
     }
   );
 
-  if (!res.ok) return null;
+  if (!res.ok)  {
+  const errorText = await res.text();
+  console.log("API Error:", errorText);
+  return null;
+};
 
   // Safely detect HTML response to prevent crash
   const text = await res.text();
@@ -32,7 +37,7 @@ export async function fetchUserProfile() {
   if (text.startsWith("<")) return null;
 
   const data = JSON.parse(text);
-  // console.log(data);
+  console.log(data);
   return data.user;
 }
 
@@ -42,7 +47,7 @@ export async function fetchUsers() {
   const token = cookieStore.get("token")?.value;
 
   const res = await fetch(
-    `https://api-dokan-backend.onrender.com/api/v1/users`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/users`,
     {
       headers: {
         "Content-Type": "application/json",
@@ -59,7 +64,7 @@ export async function fetchUsers() {
 // get all products
 export async function fetchProducts() {
   const res = await fetch(
-    `https://api-dokan-backend.onrender.com/api/v1/products`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/products`
   );
 
   const data = await res.json();
@@ -70,7 +75,7 @@ export async function fetchProducts() {
 // get single product by id
 export async function getSingleProduct(id: string) {
   const res = await fetch(
-    `https://api-dokan-backend.onrender.com/api/v1/products/${id}`
+    `${process.env.NEXT_PUBLIC_BASE_URL}/products/${id}`
   );
 
   const data = await res.json();

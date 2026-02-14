@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import HeroAllProducts from "../_components/HeroAllProducts";
 import HeroBanner from "../_components/HeroBanner";

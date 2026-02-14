@@ -6,6 +6,7 @@ export async function middleware(req: NextRequest) {
   const token = req.cookies.get("token")?.value;
   const userId = req.cookies.get("userId")?.value;
 
+
   // Clone the URL so we can safely modify it
   const url = req.nextUrl.clone();
 
@@ -18,7 +19,7 @@ export async function middleware(req: NextRequest) {
   try {
     // Validate user using your backend API (proxy validation)
     const res = await fetch(
-      `https://api-dokan-backend.onrender.com/api/v1/users/profile/${userId}`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/users/profile/${userId}`,
       {
         headers: {
           "Content-Type": "application/json",

@@ -12,12 +12,23 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const addProductPage = () => {
   const [state, action, ispending] = useActionState(addProduct, null);
   const [availableStatus, setAvailableStatus] = useState("in stock");
   const [productAge, setProductAge] = useState("new");
+
+  // clear cart after order
+  useEffect(() => {
+    if (state?.success) {
+      toast.success("Product added succesfully!")
+    } else {
+      toast.error("Something Wrong!")
+    }
+  }, [state]);
+
   return (
     <div className="md:p-4 ">
       <h1 className="md:text-xl font-semibold text-muted-foreground capitalize">

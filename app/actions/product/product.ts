@@ -141,7 +141,8 @@ export const addProduct = async (prevState: any, formData: FormData) => {
     if (!res.ok) {
       console.error("API Error:", product);
       return { error: product.message || "Failed to add product" };
-    }
+    } 
+    return { success: true};
     // console.log(product);
   } catch (error) {
     console.error("Error in product adding:", error);
@@ -251,6 +252,7 @@ export const updateProduct = async (prevState: any, formData: FormData) => {
     console.error("API Error:", product);
     return { error: product.message || "Failed to add product" };
   }
+  
 
   // back to all product page
   revalidatePath("/dashboard/products");

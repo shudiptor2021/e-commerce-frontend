@@ -19,7 +19,7 @@ interface UserData {
 }
 
 const Navbar = ({ userData }: { userData: UserData | null }) => {
-  // console.log(userProfile);
+  // console.log(userData);
   return (
     <div className="w-full md:h-28 border border-gray-300">
       {/* upper nav */}

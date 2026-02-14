@@ -4,6 +4,7 @@ import { fetchUserProfile } from "@/lib/auth";
 import { cookies } from "next/headers";
 import AppSidebar from "./_components/AppSidebar";
 import Navbar from "./_components/Navbar";
+import { Toaster } from "sonner";
 
 export default async function DashboardLayout({
   children,
@@ -29,6 +30,7 @@ export default async function DashboardLayout({
           <div className="w-full">
             <Navbar userData={userData} />
             <div className="px-4">{children}</div>
+            <Toaster position="top-right" richColors />
           </div>
         </SidebarProvider>
       </ThemeProvider>
