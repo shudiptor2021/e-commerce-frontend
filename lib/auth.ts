@@ -37,7 +37,7 @@ export async function fetchUserProfile() {
   if (text.startsWith("<")) return null;
 
   const data = JSON.parse(text);
-  console.log(data);
+  // console.log(data);
   return data.user;
 }
 
