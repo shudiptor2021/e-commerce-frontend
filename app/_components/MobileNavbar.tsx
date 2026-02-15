@@ -8,6 +8,9 @@ import { FaBarsStaggered } from "react-icons/fa6";
 import SearchMain from "./SearchMain";
 import SearchRaise from "./SearchRaise";
 import UserProfile from "./UserProfile";
+import Image from "next/image";
+import logo from "@/public/ecommerce.png"
+
 
 interface User {
   _id: string;
@@ -56,8 +59,9 @@ const MobileNavbar = ({
         <div className=" flex items-center justify-between py-2 md:hidden">
           {/* logo */}
           <div>
-            <Link href="/" className="text-md font-bold">
-              Dokan
+            <Link href="/" className="flex gap-1 items-center">
+            <Image src={logo} alt="logo" className="h-6 w-6"/>
+              <span className="text-md font-bold">Dokan</span>
             </Link>
           </div>
           {/* buttons */}

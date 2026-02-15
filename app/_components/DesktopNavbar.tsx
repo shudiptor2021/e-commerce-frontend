@@ -3,6 +3,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SearchMain from "./SearchMain";
 import UserProfile from "./UserProfile";
+import Image from "next/image";
+import logo from "@/public/ecommerce.png"
 
 interface User {
   _id: string;
@@ -25,8 +27,10 @@ const DesktopNavbar = ({
     <div className="hidden container mx-auto h-16 md:flex items-center justify-between px-14">
       {/* logo */}
       <div>
-        <Link href="/" className="text-lg text-black/80 font-bold">
-          Dokan
+        <Link href="/" className="flex gap-2 items-center">
+          
+          <Image src={logo} alt="logo" className="h-8 w-8"/>
+          <span className="text-lg text-black/80 font-bold ">Dokan</span>
         </Link>
       </div>
       {/* nav items for desktop */}
