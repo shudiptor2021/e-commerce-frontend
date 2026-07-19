@@ -4,7 +4,7 @@ import { z } from "zod";
 const formSchema = z.object({
   name: z.string().min(1).max(10),
   email: z.string().email().or(z.literal("")).optional().nullable(),
-  phone: z.string().min(11).max(11),
+  // phone: z.string().min(11).max(11),
   password: z.string().min(4).max(16),
   role: z.enum(["user", "admin"]).default("user").catch("user"),
 });
@@ -14,7 +14,7 @@ export const createUser = async (prevState: any, formData: FormData) => {
   const validationFields = formSchema.safeParse({
     name: formData.get("name") as string,
     email: formData.get("email") as string,
-    phone: formData.get("phone") as string,
+    // phone: formData.get("phone") as string,
     password: formData.get("password") as string,
     role: formData.get("role") as "user" | "admin",
   });

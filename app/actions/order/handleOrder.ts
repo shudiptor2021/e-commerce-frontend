@@ -12,8 +12,10 @@ export async function fetchAllOrders() {
     },
   });
 
+  //  console.log("token:", token);
+
   const data = await res.json();
-  //   console.log(data);
+    // console.log(data);
   return data.orders;
 }
 

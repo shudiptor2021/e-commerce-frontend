@@ -3,7 +3,7 @@ import { columns } from "@/lib/data/UsersColumns";
 import { DataTable } from "../_components/data-table";
 
 const userPage = async () => {
-  const users = await fetchUsers();
+  const users = (await fetchUsers()) || [];
   // console.log(users);
   return (
     <div className="container mx-auto py-10">

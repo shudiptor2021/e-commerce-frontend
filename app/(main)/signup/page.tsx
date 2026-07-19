@@ -77,7 +77,7 @@ const SignUpPage = () => {
             </div>
 
             {/* phone */}
-            <div className="w-full ">
+            {/* <div className="w-full ">
               <div className="flex items-center relative">
                 <input
                   type="text"
@@ -94,7 +94,7 @@ const SignUpPage = () => {
                   {state.errors.phone}
                 </p>
               )}
-            </div>
+            </div> */}
             {/* password */}
             <div className="w-full ">
               <div className="flex items-center relative">

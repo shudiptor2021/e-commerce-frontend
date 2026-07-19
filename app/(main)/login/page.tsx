@@ -1,5 +1,6 @@
 "use client";
 import { doLogin } from "@/app/actions/login/doLogin";
+// import { googleLogin } from "@/lib/auth";
 import sideImage from "@/public/SideImage.jpg";
 import Image from "next/legacy/image";
 import Link from "next/link";
@@ -8,15 +9,26 @@ import { useActionState, useEffect } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { toast } from "sonner";
 
+// google login
+export const googleLogin = async () => {
+    window.location.href =
+  "http://localhost:5000/api/v1/users/auth/google";
+};
+
 const LogInPage = () => {
   const [state, action, ispending] = useActionState(doLogin, null);
   const router = useRouter();
   useEffect(() => {
     if (state?.success) {
       router.push("/");
-      toast.success("Logged in succesfully!")
+      toast.success("Logged in succesfully!");
     }
   }, [state, router]);
+
+  // google login
+  const handleLogin = async () => {
+    await googleLogin();
+  };
 
   return (
     <div className="container mx-auto px-6 pb-10 md:px-14 md:py-20 bg-white">
@@ -42,7 +54,7 @@ const LogInPage = () => {
                 <div className="flex items-center relative">
                   <input
                     type="text"
-                    name="username"
+                    name="email"
                     className="w-full outline-none peer text-sm md:text-[18px] text-black/80 font-semibold duration-200 z-10"
                   />
                   <span className="absolute left-0 text-sm md:text-[18px] text-gray-400 peer-focus:text-sm peer-focus:-translate-y-5 duration-200 peer-user-valid:-translate-y-5  peer-valid:text-sm peer-valid:bg-white">
@@ -94,12 +106,15 @@ const LogInPage = () => {
           </div>
           <div className="w-full md:w-[370px] mt-7 space-y-3">
             {/* google */}
-            <div className="w-full h-8 md:h-14 flex items-center justify-center gap-3 border border-gray-700 text-sm md:text-[16px] text-black/90 cursor-pointer rounded ">
+            <button
+              onClick={handleLogin}
+              className="w-full h-8 md:h-14 flex items-center justify-center gap-3 border border-gray-700 text-sm md:text-[16px] text-black/90 cursor-pointer rounded "
+            >
               <span>
                 <FcGoogle size={24} />
               </span>
               Log in with Google
-            </div>
+            </button>
             {/* sign up */}
             <div className="w-full flex items-center justify-center gap-3">
               <p className="text-sm md:text-[16px] text-gray-600 ">

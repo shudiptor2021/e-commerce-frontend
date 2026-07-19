@@ -4,7 +4,7 @@ import { columns } from "@/lib/data/OrdersColumns";
 import { DataTable } from "../_components/data-table";
 
 const orderPage = async () => {
-  const orders = await fetchAllOrders();
+  const orders = (await fetchAllOrders()) || [];
   //   console.log(orders);
   return (
     <div>

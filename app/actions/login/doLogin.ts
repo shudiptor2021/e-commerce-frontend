@@ -2,16 +2,16 @@
 import { cookies } from "next/headers";
 
 export const doLogin = async (prevState: any, formData: FormData) => {
-  const username = formData.get("username");
+  const email = formData.get("email");
   const password = formData.get("password");
 
-  //   console.log(username, password);
+  //   console.log(email, password);
   // const baseUrl = "http://localhost:3000";
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/users/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ email, password }),
       credentials: "include",
     });
 
@@ -53,6 +53,8 @@ export const doLogin = async (prevState: any, formData: FormData) => {
     return { error: "Login failed" };
   }
 };
+
+
 
 export const doLogout = async () => {
   const cookieStore = await cookies();

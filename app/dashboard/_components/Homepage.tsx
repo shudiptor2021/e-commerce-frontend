@@ -6,9 +6,13 @@ import Charts from "./Charts";
 
 
 const Homepage = async () => {
-   const products = await fetchProducts();
-   const orders = await fetchAllOrders();
-    const users = await fetchUsers();
+   const products = (await fetchProducts()) || [];
+   const orders = (await fetchAllOrders()) || [];
+    const users = (await fetchUsers()) || [];
+
+//  console.log("PRODUCTS:", products);
+// console.log("ORDERS:", orders);
+// console.log("USERS:", users);
 
     // calculate total revenue
   const totalRevenue = Number(

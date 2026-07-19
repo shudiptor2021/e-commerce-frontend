@@ -1,3 +1,4 @@
+'use server';
 import { cookies } from "next/headers";
 
 // get user profile
@@ -5,6 +6,10 @@ export async function fetchUserProfile() {
   const cookieStore = await cookies();
   const userId = cookieStore.get("userId")?.value;
   const token = cookieStore.get("token")?.value;
+
+  console.log(
+  `${process.env.NEXT_PUBLIC_BASE_URL}/users/profile/${userId}`
+);
 
   // No user logged in → redirect
   if (!userId || !token) {
@@ -82,3 +87,5 @@ export async function getSingleProduct(id: string) {
   // console.log(data);
   return data;
 }
+
+
