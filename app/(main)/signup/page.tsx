@@ -1,6 +1,7 @@
 "use client";
 
 import { createUser } from "@/app/actions/signup/doSignup";
+import { googleAuth } from "@/app/dataFetch/googleauth";
 import sideImage from "@/public/SideImage.jpg";
 import Image from "next/legacy/image";
 import Link from "next/link";
@@ -18,6 +19,11 @@ const SignUpPage = () => {
       router.push("/login");
     }
   }, [state, router]);
+
+  // google login
+    const handleSignUp = async () => {
+      await googleAuth();
+    };
 
   return (
     <div className="container mx-auto px-6 pb-10 md:px-14 md:py-20 bg-white">
@@ -129,7 +135,7 @@ const SignUpPage = () => {
                 Create Account
               </button>
 
-              <button className="w-full h-8 md:h-14 flex items-center justify-center gap-3 border border-gray-700 text-sm md:text-[16px] text-black/90 cursor-pointer rounded ">
+              <button onClick={handleSignUp} className="w-full h-8 md:h-14 flex items-center justify-center gap-3 border border-gray-700 text-sm md:text-[16px] text-black/90 cursor-pointer rounded ">
                 <span>
                   <FcGoogle size={24} />
                 </span>
